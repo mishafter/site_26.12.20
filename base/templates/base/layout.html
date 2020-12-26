@@ -1,0 +1,98 @@
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+{% bootstrap_messages %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %}</title>
+</head>
+
+
+<body>
+
+<!--------------------------------Верхнее Меню--------------------------->
+        <ul class="nav justify-content-center navbar-light bg-dark">
+          <li class="nav-item">
+            <a class="nav-link active" href="/">Главная</a>
+          </li>
+            <li class="nav-item">
+                  <a class="nav-link active" href="#"  data-toggle="dropdown">Создать</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="add/filial">Филиал</a></li>
+                    <li><a href="add/region">Регион</a></li>
+                    <li><a href="add/cekh">Цех</a></li>
+                    <li><a href="add/puo">ПУО</a></li>
+                    <li><a href="add/groupitems">Группа</a></li>
+                    <li><a href="add/item">Устройство</a></li>
+                    <li><a href="add/program">Программа</a></li>
+                    <li><a href="add/broadcast">Вещание</a></li>
+                    <li><a href="add/link">Связь</a></li>
+                  </ul>
+                </li>
+            <li class="nav-item">
+            <a class="nav-link active" href="/">Отчеты</a>
+          </li>
+        </ul>
+<!--------------------------------Левое Меню--------------------------->
+<div class="container-fluid" >
+    <div class="row ">
+    <div class="col-3 ">
+        <ul class="nav flex-column bg-light">
+{% for val in filials %}
+
+        <a class="nav-link active" href="filial/{{ val.id }}">{{ val.name }}</a>
+    <!--  2 вложеное  меню    ------------------------------------------------------------------>
+
+          <ul class="dropdown-menu-right">
+              {% for v in regions %}
+                {% if val.id == v.filial_id%}
+                  <a class="dropdown-item" href="region/{{ v.id }}">{{v.name}}</a>
+
+       <!--   3 вложеное меню   ------------------------------------------------------------------>
+             <ul class="dropdown-menu-right">
+              {% for v2 in cekhs %}
+                {% if v.id == v2.region_id%}
+                  <a class="dropdown-item" href="region/{{ v2.id }}">{{v2.name}}</a>
+              {% endif %}
+            {% endfor %}
+          </ul>
+
+     <!-- конец  3 вложеное меню   ------------------------------------------------------------------>
+{% endif %}
+{% endfor %}
+</ul>
+
+
+<!-- конец 2 вложеное меню    ------------------------------------------------------------------>
+{% endfor %}
+</ul>
+</div>
+<!-- конец 1 вложеное меню    ------------------------------------------------------------------>
+ <!-- блок с контентом   ------------------------------------------------------------------>
+        <div class="col-5" > <p class="text-center align-middle"> </p>
+        {% block content %}
+
+
+
+
+<!--            -->
+
+
+
+<!--            -->
+
+
+
+        {% endblock %}
+         </div>
+  <!-- конец блок с контентом   ------------------------------------------------------------------>
+
+</div>
+
+
+</div>
+
+</body>
+</html>

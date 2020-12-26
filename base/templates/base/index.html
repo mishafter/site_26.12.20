@@ -1,0 +1,62 @@
+{% extends 'base/layout.html' %}
+
+{% block content %}
+
+<div class="container">
+ <!--   главное  меню  -->
+{% for val in filials %}
+                     <div class="dropright">
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">{{ val.name }}
+
+                    <span class="caret"></span></button>
+                <!--   1 уровень меню  -->
+
+ <ul class="dropdown-menu">
+{% for v in regions %}
+{% if val.id == v.filial_id%}
+
+                        <li class="dropdown-submenu">
+                        <a class="test" tabindex="-1" href="#">{{v.name}}<span class="caret"></span></a>
+
+{% endif %}
+                <!--   2 уровень меню  -->
+                             <ul class="dropdown-menu">
+{% for v2 in cekhs %}
+{% if v.id == v2.region_id%}
+                          <li class="dropdown-submenu">
+                        <a class="test" tabindex="-1" href="#">{{v2.name}}<span class="caret"></span></a>
+{% endif %}
+{% endfor %}
+
+
+                <!--   3 уровень меню  -->
+
+{% endfor %}
+                            <ul class="dropdown-menu">
+                              <li><a href="#">3rd level dropdown</a></li>
+                              <li><a href="#">3rd level dropdown</a></li>
+                            </ul>
+                <!--  конец 3 уровень меню  -->
+                          </li>
+                        </ul>
+                <!--  конец 2 уровень меню  -->
+                      </li>
+                    </ul>
+                 <!--  конец 1 уровень меню  -->
+
+                  </div>
+{% endfor %}
+</div>
+ <!--   главное  меню  -->
+<script>
+$(document).ready(function(){
+  $('.dropdown-submenu a.test').on("click", function(e){
+    $(this).next('ul').toggle();
+    e.stopPropagation();
+    e.preventDefault();
+  });
+});
+</script>
+
+
+{% endblock content %}
